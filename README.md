@@ -26,3 +26,6 @@ App with ID = 1 calculate Random probability but it lower than decision border, 
 
 App with ID = 2 get refreshed data by other app, and new data was taken from cache.  
 ![image](https://user-images.githubusercontent.com/52753625/193594740-95ae3bf0-34e6-492a-9ddb-b5bdd0c8af0c.png) 
+ 
+App with ID = 3 calculate Random probability higher than decision border and get new data from source. 
+![image](https://user-images.githubusercontent.com/52753625/193595009-e582e0eb-9ac2-4755-909e-a7985a232a16.png) 

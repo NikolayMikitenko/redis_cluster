@@ -1,5 +1,3 @@
-# redis_cluster
-
 # Cache on redis cluster with 1 master and 2 slaves managed by 3 sentinel
 Probabilistic cache logic: 
 1. We use the same TTL for object

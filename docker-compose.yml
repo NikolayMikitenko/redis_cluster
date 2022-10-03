@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  redis-master:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - redis-replication
+
+  redis-slave-1:
+    image: redis:latest
+    ports:
+      - "6380:6379"
+    command: redis-server --slaveof redis-master 6379
+    depends_on:
+      - redis-master
+    networks:
+      - redis-replication
+
+  redis-slave-2:
+    image: redis:latest
+    ports:
+      - "6381:6379"
+    command: redis-server --slaveof redis-master 6379
+    depends_on:
+      - redis-master
+    networks:
+      - redis-replication
+
+  redis-sentinel-1:
+    image: redis:latest
+    ports:
+      - 26379:26379
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel1/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+    depends_on:
+      - redis-master
+      - redis-slave-1
+      - redis-slave-2
+    networks:
+      - redis-replication      
+
+  redis-sentinel-2:
+    image: redis:latest
+    ports:
+      - 26380:26379
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel2/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+    networks:
+      - redis-replication      
+
+  redis-sentinel-3:
+    image: redis:latest
+    ports:
+      - 26381:26379
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    volumes:
+      - ./sentinel/sentinel3/sentinel.conf:/usr/local/etc/redis/sentinel.conf
+    networks:
+      - redis-replication      
+
+networks:
+  redis-replication:
+    driver: bridge
